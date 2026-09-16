@@ -1,6 +1,35 @@
 <resources>
-    <string name="app_name">Quack Base</string>
+    <string name="app_name">QuackBase</string>
     <string name="get_started">Get Started</string>
     <string name="quackbase_logo">QuackBase</string>
     <string name="footer_signature_description">QuackBase signature</string>
+    <string name="login_subtitle">Simple tools for your device.</string>
+    <string name="register_subtitle">Create your account</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Confirm password</string>
+    <string name="hint_email">duck@quackbase.com</string>
+    <string name="hint_password">••••••••</string>
+    <string name="action_login">Login</string>
+    <string name="action_register">Register</string>
+    <string name="action_logout">Logout</string>
+    <string name="register_prompt">Don\'t have an account? Register</string>
+    <string name="login_prompt">Already have an account? Login</string>
+    <string name="mock_mode_title">Mock mode — tap to refill</string>
+    <string name="mock_credentials">Mock mode — tap to refill\n%1$s\n%2$s</string>
+    <string name="error_invalid_email">Invalid email</string>
+    <string name="error_password_length">Password must contain at least 6 characters</string>
+    <string name="error_passwords_do_not_match">Passwords do not match</string>
+    <string name="error_invalid_mock_credentials">Invalid mock credentials</string>
+    <string name="welcome">Welcome,</string>
+    <string name="device_information">Device Information</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="model">Model</string>
+    <string name="android_version">Android</string>
+    <string name="sdk">SDK</string>
+    <string name="memory">Memory</string>
+    <string name="total_memory">Total memory</string>
+    <string name="available_memory">Available memory</string>
+    <string name="stay_quacked">Stay Quacked!</string>
+    <string name="value_unavailable">—</string>
 </resources>

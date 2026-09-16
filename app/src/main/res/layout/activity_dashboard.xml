@@ -4,7 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
     android:fillViewport="true">
 
     <LinearLayout
@@ -21,7 +20,7 @@
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="QuackBase"
+            android:contentDescription="@string/quackbase_logo"
             android:scaleType="fitCenter"
             android:src="@drawable/rubber_duck" />
 
@@ -31,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
-            android:text="QuackBase"
-            android:textColor="#111111"
+            android:text="@string/app_name"
+            android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -49,8 +48,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome,"
-                android:textColor="#777777"
+                android:text="@string/welcome"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
             <TextView
@@ -58,8 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="QuackMaster"
-                android:textColor="#111111"
+                android:text="@string/value_unavailable"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -68,8 +67,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="duckdoqua@duck.com"
-                android:textColor="#777777"
+                android:text="@string/value_unavailable"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -87,8 +86,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Device Information"
-                android:textColor="#111111"
+                android:text="@string/device_information"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -103,16 +102,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Manufacturer"
-                    android:textColor="#777777"
+                    android:text="@string/manufacturer"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtManufacturer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Google"
-                    android:textColor="#111111"
+                    android:text="@string/value_unavailable"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -129,16 +128,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Model"
-                    android:textColor="#777777"
+                    android:text="@string/model"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtModel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pixel 7"
-                    android:textColor="#111111"
+                    android:text="@string/value_unavailable"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -155,16 +154,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Android"
-                    android:textColor="#777777"
+                    android:text="@string/android_version"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtAndroidVersion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="13"
-                    android:textColor="#111111"
+                    android:text="@string/value_unavailable"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -181,16 +180,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="SDK"
-                    android:textColor="#777777"
+                    android:text="@string/sdk"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtSdkVersion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="33"
-                    android:textColor="#111111"
+                    android:text="@string/value_unavailable"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -211,8 +210,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Memory"
-                android:textColor="#111111"
+                android:text="@string/memory"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -227,16 +226,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Total memory"
-                    android:textColor="#777777"
+                    android:text="@string/total_memory"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtTotalMemory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="8 GB"
-                    android:textColor="#111111"
+                    android:text="@string/value_unavailable"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -253,16 +252,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Available memory"
-                    android:textColor="#777777"
+                    android:text="@string/available_memory"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtAvailableMemory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3.2 GB"
-                    android:textColor="#111111"
+                    android:text="@string/value_unavailable"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -270,14 +269,27 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button_primary"
+            android:backgroundTint="@color/brand_yellow"
+            android:text="@string/action_logout"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <!-- Branding -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="28dp"
-            android:text="Stay Quacked!"
-            android:textColor="#777777"
+            android:text="@string/stay_quacked"
+            android:textColor="@color/text_secondary"
             android:textSize="14sp"
             android:textStyle="italic" />
 
