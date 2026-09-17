@@ -6,13 +6,15 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import br.com.project.quackbase.R
+import br.com.project.quackbase.data.auth.AuthRepository
 import br.com.project.quackbase.data.device.DeviceInfoProvider
-import br.com.project.quackbase.mock.MockAuthProvider
-import br.com.project.quackbase.model.User
 import br.com.project.quackbase.ui.login.LoginActivity
+import com.google.firebase.auth.FirebaseUser
 import java.util.Locale
 
 class DashboardActivity : AppCompatActivity() {
+
+    private val authRepository = AuthRepository()
 
     private lateinit var txtUserName: TextView
     private lateinit var txtUserEmail: TextView
@@ -29,7 +31,7 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val user = MockAuthProvider.getCurrentUser()
+        val user = authRepository.getCurrentUser()
         if (user == null) {
             openLogin()
             return
@@ -60,14 +62,19 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun initializeListeners() {
         btnLogout.setOnClickListener {
-            MockAuthProvider.signOut()
+            authRepository.signOut()
             openLogin()
         }
     }
 
-    private fun loadUser(user: User) {
-        txtUserName.text = user.name
-        txtUserEmail.text = user.email
+    private fun loadUser(user: FirebaseUser) {
+        val email = user.email.orEmpty()
+        val displayName = user.displayName
+            ?.takeIf { it.isNotBlank() }
+            ?: displayNameFrom(email)
+
+        txtUserName.text = displayName
+        txtUserEmail.text = email.ifBlank { getString(R.string.value_unavailable) }
     }
 
     private fun loadDeviceInfo() {
@@ -102,6 +109,23 @@ class DashboardActivity : AppCompatActivity() {
             "%.1f GB",
             gigabytes
         )
+    }
+
+    private fun displayNameFrom(email: String): String {
+        val name = email
+            .substringBefore('@')
+            .replace('.', ' ')
+            .replace('_', ' ')
+            .replace('-', ' ')
+            .split(' ')
+            .filter { it.isNotBlank() }
+            .joinToString(" ") { part ->
+                part.replaceFirstChar { firstCharacter ->
+                    firstCharacter.uppercaseChar()
+                }
+            }
+
+        return name.ifBlank { getString(R.string.default_user_name) }
     }
 
     private fun openLogin() {

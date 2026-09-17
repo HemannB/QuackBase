@@ -10,5 +10,6 @@
     <color name="input_border">#FFD5D5D5</color>
     <color name="card_border">#FFEEEEEE</color>
     <color name="background_muted">#FFF8F8F8</color>
+    <color name="error">#FFB3261E</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

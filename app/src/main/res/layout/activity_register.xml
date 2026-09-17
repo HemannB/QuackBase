@@ -150,6 +150,26 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <ProgressBar
+                android:id="@+id/progressRegister"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:contentDescription="@string/loading"
+                android:indeterminateTint="@color/brand_yellow_dark"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtRegisterError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
             <!-- Voltar login -->
             <TextView
                 android:id="@+id/txtLogin"

@@ -2,16 +2,21 @@ package br.com.project.quackbase.ui.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import br.com.project.quackbase.R
-import br.com.project.quackbase.mock.MockAuthProvider
+import br.com.project.quackbase.data.auth.AuthRepository
 import br.com.project.quackbase.ui.dashboard.DashboardActivity
+import br.com.project.quackbase.util.AuthErrorMapper
 import br.com.project.quackbase.util.Validators
 
 class RegisterActivity : AppCompatActivity() {
+
+    private val authRepository = AuthRepository()
 
     private lateinit var inputEmail: EditText
     private lateinit var inputPassword: EditText
@@ -19,6 +24,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var btnRegister: Button
     private lateinit var txtLogin: TextView
+    private lateinit var txtRegisterError: TextView
+    private lateinit var progressRegister: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +43,8 @@ class RegisterActivity : AppCompatActivity() {
 
         btnRegister = findViewById(R.id.btnRegister)
         txtLogin = findViewById(R.id.txtLogin)
+        txtRegisterError = findViewById(R.id.txtRegisterError)
+        progressRegister = findViewById(R.id.progressRegister)
     }
 
     private fun initializeListeners() {
@@ -58,6 +67,7 @@ class RegisterActivity : AppCompatActivity() {
         inputEmail.error = null
         inputPassword.error = null
         inputConfirmPassword.error = null
+        txtRegisterError.visibility = View.GONE
 
         if (!Validators.isEmailValid(email)) {
             inputEmail.error = getString(R.string.error_invalid_email)
@@ -77,8 +87,31 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        MockAuthProvider.register(email, password)
-        openDashboard()
+        setLoading(true)
+
+        authRepository.signUp(email, password) { result ->
+            if (!isFinishing && !isDestroyed) {
+                setLoading(false)
+                result.fold(
+                    onSuccess = { openDashboard() },
+                    onFailure = { exception -> showAuthError(exception) }
+                )
+            }
+        }
+    }
+
+    private fun setLoading(loading: Boolean) {
+        inputEmail.isEnabled = !loading
+        inputPassword.isEnabled = !loading
+        inputConfirmPassword.isEnabled = !loading
+        btnRegister.isEnabled = !loading
+        txtLogin.isEnabled = !loading
+        progressRegister.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
+    private fun showAuthError(exception: Throwable) {
+        txtRegisterError.setText(AuthErrorMapper.messageFor(exception))
+        txtRegisterError.visibility = View.VISIBLE
     }
 
     private fun openDashboard() {

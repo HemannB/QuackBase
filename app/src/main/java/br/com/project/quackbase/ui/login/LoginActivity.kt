@@ -2,28 +2,38 @@ package br.com.project.quackbase.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import br.com.project.quackbase.R
-import br.com.project.quackbase.mock.MockAuthProvider
-import br.com.project.quackbase.mock.MockUserProvider
+import br.com.project.quackbase.data.auth.AuthRepository
 import br.com.project.quackbase.ui.dashboard.DashboardActivity
 import br.com.project.quackbase.ui.register.RegisterActivity
+import br.com.project.quackbase.util.AuthErrorMapper
 import br.com.project.quackbase.util.Validators
 
 class LoginActivity : AppCompatActivity() {
+
+    private val authRepository = AuthRepository()
 
     private lateinit var inputEmail: EditText
     private lateinit var inputPassword: EditText
 
     private lateinit var btnLogin: Button
     private lateinit var txtRegister: TextView
-    private lateinit var txtMockCredentials: TextView
+    private lateinit var txtLoginError: TextView
+    private lateinit var progressLogin: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (authRepository.getCurrentUser() != null) {
+            openDashboard()
+            return
+        }
 
         setContentView(R.layout.activity_login)
 
@@ -37,15 +47,8 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin = findViewById(R.id.btnLogin)
         txtRegister = findViewById(R.id.txtRegister)
-        txtMockCredentials = findViewById(R.id.txtMockCredentials)
-
-        txtMockCredentials.text = getString(
-            R.string.mock_credentials,
-            MockUserProvider.getUser().email,
-            MockAuthProvider.TEST_PASSWORD
-        )
-
-        fillMockCredentials()
+        txtLoginError = findViewById(R.id.txtLoginError)
+        progressLogin = findViewById(R.id.progressLogin)
     }
 
     private fun initializeListeners() {
@@ -57,10 +60,6 @@ class LoginActivity : AppCompatActivity() {
         txtRegister.setOnClickListener {
             openRegister()
         }
-
-        txtMockCredentials.setOnClickListener {
-            fillMockCredentials()
-        }
     }
 
     private fun login() {
@@ -70,6 +69,7 @@ class LoginActivity : AppCompatActivity() {
 
         inputEmail.error = null
         inputPassword.error = null
+        txtLoginError.visibility = View.GONE
 
         if (!Validators.isEmailValid(email)) {
             inputEmail.error = getString(R.string.error_invalid_email)
@@ -83,19 +83,30 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        if (MockAuthProvider.signIn(email, password) == null) {
-            inputPassword.error = getString(R.string.error_invalid_mock_credentials)
-            inputPassword.requestFocus()
-            return
-        }
+        setLoading(true)
 
-        openDashboard()
+        authRepository.signIn(email, password) { result ->
+            if (!isFinishing && !isDestroyed) {
+                setLoading(false)
+                result.fold(
+                    onSuccess = { openDashboard() },
+                    onFailure = { exception -> showAuthError(exception) }
+                )
+            }
+        }
     }
 
-    private fun fillMockCredentials() {
-        inputEmail.setText(MockUserProvider.getUser().email)
-        inputPassword.setText(MockAuthProvider.TEST_PASSWORD)
-        inputPassword.setSelection(inputPassword.text.length)
+    private fun setLoading(loading: Boolean) {
+        inputEmail.isEnabled = !loading
+        inputPassword.isEnabled = !loading
+        btnLogin.isEnabled = !loading
+        txtRegister.isEnabled = !loading
+        progressLogin.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
+    private fun showAuthError(exception: Throwable) {
+        txtLoginError.setText(AuthErrorMapper.messageFor(exception))
+        txtLoginError.visibility = View.VISIBLE
     }
 
     private fun openRegister() {

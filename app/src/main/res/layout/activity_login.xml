@@ -53,23 +53,9 @@
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/txtMockCredentials"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/bg_card"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="12dp"
-                android:text="@string/mock_mode_title"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
-
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="24dp" />
+                android:layout_height="36dp" />
 
             <!-- Email label -->
             <TextView
@@ -139,6 +125,26 @@
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressLogin"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:contentDescription="@string/loading"
+                android:indeterminateTint="@color/brand_yellow_dark"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtLoginError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:textColor="@color/error"
+                android:textSize="13sp"
+                android:visibility="gone" />
 
             <!-- Register -->
             <TextView
