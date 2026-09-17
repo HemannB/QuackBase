@@ -4,6 +4,10 @@ import android.util.Patterns
 
 object Validators {
 
+    fun isNameValid(name: String): Boolean {
+        return name.trim().length >= 2
+    }
+
     fun isEmailValid(email: String): Boolean {
         return email.isNotBlank() &&
                 Patterns.EMAIL_ADDRESS.matcher(email).matches()

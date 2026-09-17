@@ -18,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private val authRepository = AuthRepository()
 
+    private lateinit var inputName: EditText
     private lateinit var inputEmail: EditText
     private lateinit var inputPassword: EditText
     private lateinit var inputConfirmPassword: EditText
@@ -37,6 +38,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initializeComponents() {
+        inputName = findViewById(R.id.inputName)
         inputEmail = findViewById(R.id.inputEmail)
         inputPassword = findViewById(R.id.inputPassword)
         inputConfirmPassword = findViewById(R.id.inputConfirmPassword)
@@ -60,14 +62,22 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun register() {
 
+        val name = inputName.text.toString().trim()
         val email = inputEmail.text.toString().trim()
         val password = inputPassword.text.toString()
         val confirmPassword = inputConfirmPassword.text.toString()
 
+        inputName.error = null
         inputEmail.error = null
         inputPassword.error = null
         inputConfirmPassword.error = null
         txtRegisterError.visibility = View.GONE
+
+        if (!Validators.isNameValid(name)) {
+            inputName.error = getString(R.string.error_invalid_name)
+            inputName.requestFocus()
+            return
+        }
 
         if (!Validators.isEmailValid(email)) {
             inputEmail.error = getString(R.string.error_invalid_email)
@@ -89,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
 
         setLoading(true)
 
-        authRepository.signUp(email, password) { result ->
+        authRepository.signUp(name, email, password) { result ->
             if (!isFinishing && !isDestroyed) {
                 setLoading(false)
                 result.fold(
@@ -101,6 +111,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setLoading(loading: Boolean) {
+        inputName.isEnabled = !loading
         inputEmail.isEnabled = !loading
         inputPassword.isEnabled = !loading
         inputConfirmPassword.isEnabled = !loading

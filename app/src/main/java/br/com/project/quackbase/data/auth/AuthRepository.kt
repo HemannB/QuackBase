@@ -2,6 +2,7 @@ package br.com.project.quackbase.data.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 
 class AuthRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -22,6 +23,7 @@ class AuthRepository(
     }
 
     fun signUp(
+        name: String,
         email: String,
         password: String,
         onResult: (Result<FirebaseUser>) -> Unit
@@ -29,7 +31,25 @@ class AuthRepository(
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 val user = if (task.isSuccessful) task.result?.user else null
-                completeWithUser(task.isSuccessful, user, task.exception, onResult)
+
+                if (!task.isSuccessful || user == null) {
+                    completeWithUser(false, null, task.exception, onResult)
+                    return@addOnCompleteListener
+                }
+
+                val profileUpdates = UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build()
+
+                user.updateProfile(profileUpdates)
+                    .addOnCompleteListener { profileTask ->
+                        completeWithUser(
+                            profileTask.isSuccessful,
+                            user,
+                            profileTask.exception,
+                            onResult
+                        )
+                    }
             }
     }
 

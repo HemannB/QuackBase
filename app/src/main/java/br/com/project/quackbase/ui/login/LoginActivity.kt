@@ -14,6 +14,7 @@ import br.com.project.quackbase.ui.dashboard.DashboardActivity
 import br.com.project.quackbase.ui.register.RegisterActivity
 import br.com.project.quackbase.util.AuthErrorMapper
 import br.com.project.quackbase.util.Validators
+import kotlin.fold
 
 class LoginActivity : AppCompatActivity() {
 
